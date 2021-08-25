@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import config from "config";
 import { Router, Response } from "express";
-import { check, validationResult } from "express-validator/check";
+import { check, validationResult } from "express-validator";
 import HttpStatusCodes from "http-status-codes";
 import jwt from "jsonwebtoken";
 

@@ -1,5 +1,5 @@
 import { Router, Response } from "express";
-import { check, validationResult } from "express-validator/check";
+import { check, validationResult } from "express-validator";
 import HttpStatusCodes from "http-status-codes";
 
 import auth from "../../middleware/auth";
