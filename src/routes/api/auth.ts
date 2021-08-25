@@ -8,7 +8,8 @@ import jwt from "jsonwebtoken";
 import auth from "../../middleware/auth";
 import Payload from "../../types/Payload";
 import Request from "../../types/Request";
-import User, { IUser } from "../../models/User";
+import { UserRepository } from "../../../config/Repositories";
+import { User } from "../../models/User";
 
 const router: Router = Router();
 
@@ -17,7 +18,7 @@ const router: Router = Router();
 // @access  Private
 router.get("/", auth, async (req: Request, res: Response) => {
   try {
-    const user: IUser = await User.findById(req.userId).select("-password");
+    const user: User = await UserRepository.getUserById(req.userId);
     res.json(user);
   } catch (err) {
     console.error(err.message);
@@ -44,7 +45,7 @@ router.post(
 
     const { email, password } = req.body;
     try {
-      let user: IUser = await User.findOne({ email });
+      let user: User = await UserRepository.findByEmail(email);
 
       if (!user) {
         return res.status(HttpStatusCodes.BAD_REQUEST).json({
@@ -69,7 +70,7 @@ router.post(
       }
 
       const payload: Payload = {
-        userId: user.id
+        userId: user.uid
       };
 
       jwt.sign(

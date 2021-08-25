@@ -1,5 +1,5 @@
 {
-  "mongoURI": "mongodb+srv://root:1234@devconnector-ejkgk.mongodb.net/test?retryWrites=true",
+  "mongoURI": "mongodb+srv://city-tour-user:city-tour-password@cluster0.so28s.mongodb.net/my-wallet?retryWrites=true&w=majority",
   "jwtSecret": "jwtSecretToken",
   "jwtExpiration": 360000
 }

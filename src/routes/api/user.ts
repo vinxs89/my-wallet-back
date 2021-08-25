@@ -8,7 +8,9 @@ import jwt from "jsonwebtoken";
 
 import Payload from "../../types/Payload";
 import Request from "../../types/Request";
-import User, { IUser } from "../../models/User";
+import { User } from "../../models/User";
+import { UserRepository } from "../../../config/Repositories";
+
 
 const router: Router = Router();
 
@@ -34,7 +36,7 @@ router.post(
 
     const { email, password } = req.body;
     try {
-      let user: IUser = await User.findOne({ email });
+      let user: User = await UserRepository.findByEmail(email);
 
       if (user) {
         return res.status(HttpStatusCodes.BAD_REQUEST).json({
@@ -64,12 +66,10 @@ router.post(
         avatar
       };
 
-      user = new User(userFields);
-
-      await user.save();
+      user = await UserRepository.createUser(userFields);
 
       const payload: Payload = {
-        userId: user.id
+        userId: user.uid
       };
 
       jwt.sign(
